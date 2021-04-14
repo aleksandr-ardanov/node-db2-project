@@ -1,4 +1,5 @@
 const db = require('../../data/db-config');
+const { get } = require('./cars-router');
 
 const getAll = () => {
   return db("cars")
@@ -13,8 +14,21 @@ const create = async (changes) => {
   return getById(id)
 }
 
+const update = async (id, changes) => {
+  await db("cars").where({id}).update(changes)
+  return getById(id)
+}
+
+const remove = async (id) =>{
+  const oldCar = await getById(id);
+  await db('cars').where({id}).del()
+  return oldCar
+}
+
 module.exports = {
   getAll,
   getById,
-  create
+  create,
+  update,
+  remove
 }

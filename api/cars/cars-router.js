@@ -26,13 +26,34 @@ router.post('/', checkCarPayload,
 checkVinNumberValid, checkVinNumberUnique, (req,res,next) => {
     Cars.create(req.body)
         .then(car => {
-            console.log(car)
             res.status(201).json(car)
         })
         .catch(err => {
             next(err)
         })
 })
+
+router.put('/:id', checkCarId, checkCarPayload, (req,res,next) => {
+     const {id} = req.params;
+     Cars.update(id, req.body)
+        .then(car => {
+            res.status(200).json(car)
+        })
+        .catch(err => {
+            next(err)
+        })
+ })
+
+ router.delete('/:id', checkCarId, (req,res,next) => {
+     const {id} = req.params;
+     Cars.remove(id)
+        .then(deleted => {
+            res.status(200).json(deleted)
+        })
+        .catch(err => {
+            next(err)
+        })
+ })
 
 router.use((err,req,res,next) => {
     res.status(500).json({
