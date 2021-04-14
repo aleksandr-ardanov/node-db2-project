@@ -55,6 +55,7 @@ router.put('/:id', checkCarId, checkCarPayload, (req,res,next) => {
         })
  })
 
+// eslint-disable-next-line no-unused-vars
 router.use((err,req,res,next) => {
     res.status(500).json({
         message:"error!",
